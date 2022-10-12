@@ -125,10 +125,9 @@ client.on("interactionCreate", async (interaction) => {
 });
 
 function getCommandType(commandName) {
-  if (commandName === "userinfo") {
+  if (commandName === "userinfo" || commandName === "ping") {
     return "client";
   } else if (
-    commandName === "ping" ||
     commandName === "help" ||
     commandName === "wowtoken" ||
     commandName === "sysinfo"
