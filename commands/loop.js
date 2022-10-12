@@ -3,7 +3,7 @@ const { QueueRepeatMode } = require("discord-player");
 
 module.exports = {
   name: "loop",
-  description: "Ativa o modo loop",
+  description: "Liga ou desliga o modo loop",
   options: [
     {
       name: "mode",
