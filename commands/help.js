@@ -2,7 +2,7 @@ const fs = require("fs");
 
 module.exports = {
   name: "help",
-  description: "Lista todos os comandos disponívels.",
+  description: "Lista todos os comandos disponíveis",
   execute(interaction) {
     let str = "";
     const commandFiles = fs

@@ -5,7 +5,7 @@ var mem = osu.mem;
 
 module.exports = {
   name: "sysinfo",
-  description: "Informações de uso dá máquina do bot!",
+  description: "Informações de uso dá máquina do bot",
   async execute(interaction) {
     await interaction.deferReply();
     let str;

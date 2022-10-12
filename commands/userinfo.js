@@ -2,7 +2,7 @@ const { ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "userinfo",
-  description: "Recupera informações de um usuário!",
+  description: "Recupera informações de um usuário",
   options: [
     {
       name: "user",

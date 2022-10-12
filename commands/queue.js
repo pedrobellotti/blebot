@@ -2,7 +2,7 @@ const { GuildMember } = require("discord.js");
 
 module.exports = {
   name: "queue",
-  description: "Mostra a fila de músicas atual!",
+  description: "Mostra a fila de músicas atual",
 
   async execute(interaction, player) {
     if (

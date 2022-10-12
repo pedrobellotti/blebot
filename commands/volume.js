@@ -2,7 +2,7 @@ const { GuildMember, ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "volume",
-  description: "Altera o volume!",
+  description: "Altera o volume",
   options: [
     {
       name: "volume",

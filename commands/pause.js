@@ -2,7 +2,7 @@ const { GuildMember } = require("discord.js");
 
 module.exports = {
   name: "pause",
-  description: "Pausa a música atual!",
+  description: "Pausa a música atual",
   async execute(interaction, player) {
     if (
       !(interaction.member instanceof GuildMember) ||

@@ -2,7 +2,7 @@ const { GuildMember, ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "seek",
-  description: "Coloca a música em um tempo especificado.",
+  description: "Coloca a música em um tempo especificado",
   options: [
     {
       name: "tempo",

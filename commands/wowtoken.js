@@ -7,7 +7,7 @@ function formatNumber(number) {
 
 module.exports = {
   name: "wowtoken",
-  description: "Preço do WoW token na região US.",
+  description: "Preço do WoW token",
   options: [
     {
       name: "region",

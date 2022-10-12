@@ -2,7 +2,7 @@ const { GuildMember, ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "remove",
-  description: "Remove uma música da fila!",
+  description: "Remove uma música da fila",
   options: [
     {
       name: "number",
