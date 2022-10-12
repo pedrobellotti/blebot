@@ -16,7 +16,8 @@ module.exports = {
       required: false,
     },
   ],
-  async execute(interaction, player) {
+  async execute(interaction) {
+    await interaction.deferReply();
     const region = interaction.options.getString("region") || "us";
     let responseString = "";
     try {
@@ -54,7 +55,7 @@ module.exports = {
       console.log("Error while requesting wow token prices: ", error);
       responseString = `Erro ao recuperar preços do token: ${error.message}`;
     }
-    interaction.reply({
+    interaction.editReply({
       content: responseString,
       ephemeral: false,
     });

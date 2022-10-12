@@ -69,7 +69,7 @@ module.exports = {
           ? "🔂"
           : loopMode === QueueRepeatMode.QUEUE
           ? "🔁"
-          : "▶";
+          : "▶️";
 
       return void interaction.followUp({
         content: success

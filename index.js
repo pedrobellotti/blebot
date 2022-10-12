@@ -34,7 +34,7 @@ player.on("connectionError", (queue, error) => {
 
 player.on("trackStart", (queue, track) => {
   queue.metadata.send(
-    `▶ | Começando a tocar: **${track.title}** em **${queue.connection.channel.name}**!`
+    `▶️ | Começando a tocar: **${track.title}** em **${queue.connection.channel.name}**!`
   );
 });
 
@@ -95,20 +95,48 @@ client.on("messageCreate", async (message) => {
 });
 
 client.on("interactionCreate", async (interaction) => {
-  const command = client.commands.get(interaction.commandName.toLowerCase());
+  if (!interaction.isChatInputCommand()) return;
 
   try {
-    if (interaction.commandName == "userinfo") {
-      command.execute(interaction, client);
-    } else {
-      command.execute(interaction, player);
+    const command = client.commands.get(interaction.commandName.toLowerCase());
+    console.log(
+      `${new Date().toISOString()} | User ${interaction.user.tag} in #${
+        interaction.channel.name
+      } used command ${interaction.commandName}.`
+    );
+    const commandType = getCommandType(interaction.commandName);
+    switch (commandType) {
+      case "client":
+        command.execute(interaction, client);
+        break;
+      case "player":
+        command.execute(interaction, player);
+        break;
+      default:
+        command.execute(interaction);
+        break;
     }
   } catch (error) {
-    console.error(error);
-    interaction.followUp({
+    console.log(`${new Date().toISOString()} | General error: ${error}`);
+    interaction.reply({
       content: "Algum erro aconteceu ao tentar executar o comando!",
     });
   }
 });
+
+function getCommandType(commandName) {
+  if (commandName === "userinfo") {
+    return "client";
+  } else if (
+    commandName === "ping" ||
+    commandName === "help" ||
+    commandName === "wowtoken" ||
+    commandName === "sysinfo"
+  ) {
+    return "none";
+  } else {
+    return "player";
+  }
+}
 
 client.login(config.token);

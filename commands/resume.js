@@ -33,7 +33,7 @@ module.exports = {
       });
     const success = queue.setPaused(false);
     return void interaction.followUp({
-      content: success ? "▶ | Pause removido!" : "❌ | Algum erro aconteceu!",
+      content: success ? "▶️ | Pause removido!" : "❌ | Algum erro aconteceu!",
     });
   },
 };
