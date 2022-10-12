@@ -2,12 +2,12 @@ const { ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "userinfo",
-  description: "Get information about a user.",
+  description: "Recupera informações de um usuário!",
   options: [
     {
       name: "user",
       type: ApplicationCommandOptionType.User,
-      description: "The user you want to get info about",
+      description: "Usuário para pegar informações",
       required: true,
     },
   ],
@@ -15,7 +15,7 @@ module.exports = {
     const user = interaction.options.getUser("user");
 
     interaction.reply({
-      content: `Name: ${user.username}, ID: ${
+      content: `Nome: ${user.username}, ID: ${
         user.id
       }, Avatar: ${user.displayAvatarURL({ dynamic: true })}`,
       ephemeral: true,

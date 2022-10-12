@@ -3,12 +3,12 @@ const { QueueRepeatMode } = require("discord-player");
 
 module.exports = {
   name: "loop",
-  description: "Sets loop mode",
+  description: "Ativa o modo loop",
   options: [
     {
       name: "mode",
       type: ApplicationCommandOptionType.Integer,
-      description: "Loop type",
+      description: "Tipo do loop",
       required: true,
       choices: [
         {
@@ -37,7 +37,7 @@ module.exports = {
         !interaction.member.voice.channel
       ) {
         return void interaction.reply({
-          content: "You are not in a voice channel!",
+          content: "Você não está em um canal de voz!",
           ephemeral: true,
         });
       }
@@ -48,7 +48,7 @@ module.exports = {
           interaction.guild.members.me.voice.channelId
       ) {
         return void interaction.reply({
-          content: "You are not in my voice channel!",
+          content: "Você não está no meu canal de voz!",
           ephemeral: true,
         });
       }
@@ -58,7 +58,7 @@ module.exports = {
       const queue = player.getQueue(interaction.guildId);
       if (!queue || !queue.playing) {
         return void interaction.followUp({
-          content: "❌ | No music is being played!",
+          content: "❌ | Nenhuma música está tocando!",
         });
       }
 
@@ -73,14 +73,13 @@ module.exports = {
 
       return void interaction.followUp({
         content: success
-          ? `${mode} | Updated loop mode!`
-          : "❌ | Could not update loop mode!",
+          ? `${mode} | Modo loop atualizado!`
+          : "❌ | Erro ao atualizar o modo loop!",
       });
     } catch (error) {
       console.log(error);
       interaction.followUp({
-        content:
-          "There was an error trying to execute that command: " + error.message,
+        content: "Um erro aconteceu ao executar o comando: " + error.message,
       });
     }
   },

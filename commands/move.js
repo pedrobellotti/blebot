@@ -2,18 +2,18 @@ const { GuildMember, ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "move",
-  description: "move song position in the queue!",
+  description: "Move uma música de posição na fila",
   options: [
     {
       name: "track",
       type: ApplicationCommandOptionType.Integer,
-      description: "The track number you want to move",
+      description: "O número da música para mover",
       required: true,
     },
     {
       name: "position",
       type: ApplicationCommandOptionType.Integer,
-      description: "The position to move it to",
+      description: "A posição para qual mover",
       required: true,
     },
   ],
@@ -23,7 +23,7 @@ module.exports = {
       !interaction.member.voice.channel
     ) {
       return void interaction.reply({
-        content: "You are not in a voice channel!",
+        content: "Você não está em um canal de voz!",
         ephemeral: true,
       });
     }
@@ -34,7 +34,7 @@ module.exports = {
         interaction.guild.members.me.voice.channelId
     ) {
       return void interaction.reply({
-        content: "You are not in my voice channel!",
+        content: "Você não está no meu canal de voz!",
         ephemeral: true,
       });
     }
@@ -43,7 +43,7 @@ module.exports = {
     const queue = player.getQueue(interaction.guildId);
     if (!queue || !queue.playing)
       return void interaction.followUp({
-        content: "❌ | No music is being played!",
+        content: "❌ | Nenhuma música está tocando!",
       });
     const queueNumbers = [
       interaction.options.getInteger("track") - 1,
@@ -54,19 +54,19 @@ module.exports = {
       queueNumbers[1] > queue.tracks.length
     )
       return void interaction.followUp({
-        content: "❌ | Track number greater than queue depth!",
+        content: "❌ | Número da música inválido!",
       });
 
     try {
       const track = queue.remove(queueNumbers[0]);
       queue.insert(track, queueNumbers[1]);
       return void interaction.followUp({
-        content: `✅ | Moved **${track}**!`,
+        content: `✅ | **${track}** movida!`,
       });
     } catch (error) {
       console.log(error);
       return void interaction.followUp({
-        content: "❌ | Something went wrong!",
+        content: "❌ | Um erro aconteceu ao executar o comando!",
       });
     }
   },

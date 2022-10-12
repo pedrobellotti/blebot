@@ -3,12 +3,12 @@ const { QueryType } = require("discord-player");
 
 module.exports = {
   name: "play",
-  description: "Play a song in your channel!",
+  description: "Toca uma música no seu canal atual!",
   options: [
     {
       name: "query",
       type: ApplicationCommandOptionType.String,
-      description: "The song you want to play",
+      description: "A música para tocar",
       required: true,
     },
   ],
@@ -19,7 +19,7 @@ module.exports = {
         !interaction.member.voice.channel
       ) {
         return void interaction.reply({
-          content: "You are not in a voice channel!",
+          content: "Você não está em um canal de voz!",
           ephemeral: true,
         });
       }
@@ -30,7 +30,7 @@ module.exports = {
           interaction.guild.members.me.voice.channelId
       ) {
         return void interaction.reply({
-          content: "You are not in my voice channel!",
+          content: "Você não está no meu canal de voz!",
           ephemeral: true,
         });
       }
@@ -45,7 +45,9 @@ module.exports = {
         })
         .catch(() => {});
       if (!searchResult || !searchResult.tracks.length)
-        return void interaction.followUp({ content: "No results were found!" });
+        return void interaction.followUp({
+          content: "Nenhum resultado foi encontrado!",
+        });
 
       const queue = await player.createQueue(interaction.guild, {
         ytdlOptions: {
@@ -63,13 +65,13 @@ module.exports = {
       } catch {
         void player.deleteQueue(interaction.guildId);
         return void interaction.followUp({
-          content: "Could not join your voice channel!",
+          content: "Não consegui entrar no seu canal de voz!",
         });
       }
 
       await interaction.followUp({
-        content: `⏱ | Loading your ${
-          searchResult.playlist ? "playlist" : "track"
+        content: `⏱ | Carregando a ${
+          searchResult.playlist ? "playlist" : "música"
         }...`,
       });
       searchResult.playlist
@@ -79,8 +81,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
       interaction.followUp({
-        content:
-          "There was an error trying to execute that command: " + error.message,
+        content: "Um erro aconteceu ao executar o comando: " + error.message,
       });
     }
   },

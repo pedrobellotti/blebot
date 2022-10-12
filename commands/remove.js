@@ -2,12 +2,12 @@ const { GuildMember, ApplicationCommandOptionType } = require("discord.js");
 
 module.exports = {
   name: "remove",
-  description: "remove a song from the queue!",
+  description: "Remove uma música da fila!",
   options: [
     {
       name: "number",
       type: ApplicationCommandOptionType.Integer,
-      description: "The queue number you want to remove",
+      description: "A posição da fila para remover",
       required: true,
     },
   ],
@@ -17,7 +17,7 @@ module.exports = {
       !interaction.member.voice.channel
     ) {
       return void interaction.reply({
-        content: "You are not in a voice channel!",
+        content: "Você não está em um canal de voz!",
         ephemeral: true,
       });
     }
@@ -28,7 +28,7 @@ module.exports = {
         interaction.guild.members.me.voice.channelId
     ) {
       return void interaction.reply({
-        content: "You are not in my voice channel!",
+        content: "Você não está no meu canal de voz!",
         ephemeral: true,
       });
     }
@@ -37,18 +37,18 @@ module.exports = {
     const queue = player.getQueue(interaction.guildId);
     if (!queue || !queue.playing)
       return void interaction.followUp({
-        content: "❌ | No music is being played!",
+        content: "❌ | Nenhuma música tocando!",
       });
     const number = interaction.options.getInteger("number") - 1;
     if (number > queue.tracks.length)
       return void interaction.followUp({
-        content: "❌ | Track number greater than queue depth!",
+        content: "❌ | Número da música inválido!",
       });
     const removedTrack = queue.remove(number);
     return void interaction.followUp({
       content: removedTrack
-        ? `✅ | Removed **${removedTrack}**!`
-        : "❌ | Something went wrong!",
+        ? `✅ | **${removedTrack}** removida!`
+        : "❌ | Algum erro aconteceu!",
     });
   },
 };

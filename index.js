@@ -1,9 +1,9 @@
 const fs = require("fs");
 const Discord = require("discord.js");
+const { ActivityType } = require("discord.js");
 const Client = require("./client/Client");
 const config = require("./config.json");
 const { Player } = require("discord-player");
-
 const client = new Client();
 client.commands = new Discord.Collection();
 
@@ -34,39 +34,35 @@ player.on("connectionError", (queue, error) => {
 
 player.on("trackStart", (queue, track) => {
   queue.metadata.send(
-    `▶ | Started playing: **${track.title}** in **${queue.connection.channel.name}**!`
+    `▶ | Começando a tocar: **${track.title}** em **${queue.connection.channel.name}**!`
   );
 });
 
 player.on("trackAdd", (queue, track) => {
-  queue.metadata.send(`🎶 | Track **${track.title}** queued!`);
+  queue.metadata.send(`🎶 | Música **${track.title}** enfileirada!`);
 });
 
 player.on("botDisconnect", (queue) => {
   queue.metadata.send(
-    "❌ | I was manually disconnected from the voice channel, clearing queue!"
+    "❌ | Fui desconectado manualmente do canal, limpando a fila!"
   );
 });
 
 player.on("channelEmpty", (queue) => {
-  queue.metadata.send("❌ | Nobody is in the voice channel, leaving...");
+  queue.metadata.send("❌ | Ninguém está no canal de voz, saindo...");
 });
 
 player.on("queueEnd", (queue) => {
-  queue.metadata.send("✅ | Queue finished!");
+  queue.metadata.send("✅ | Fila terminada!");
 });
 
 client.once("ready", (c) => {
   console.log(
-    `Logged in as ${c.user.tag}. Setting activity to ${config.activity} and activity type to ${config.activityType}`
+    `Logged in as ${c.user.tag}. Setting activity to '${config.activity}' and activity type to '${ActivityType.Playing}'`
   );
-  client.user.setActivity(config.activity, { type: config.activityType });
+  client.user.setActivity(config.activity, { type: ActivityType.Playing });
   console.log("Ready!");
 });
-
-/* client.on('ready', function() {
-  client.user.setActivity(config.activity, { type: config.activityType });
-}); */
 
 client.once("reconnecting", () => {
   console.log("Reconnecting!");
@@ -87,11 +83,11 @@ client.on("messageCreate", async (message) => {
     await message.guild.commands
       .set(client.commands)
       .then(() => {
-        message.reply("Deployed!");
+        message.reply("Deploy executado!");
       })
       .catch((err) => {
         message.reply(
-          "Could not deploy commands! Make sure the bot has the application.commands permission!"
+          "Erro ao fazer deploy dos comandos! Verifique se o bot possui a permissão de application.commands!"
         );
         console.error(err);
       });
@@ -110,7 +106,7 @@ client.on("interactionCreate", async (interaction) => {
   } catch (error) {
     console.error(error);
     interaction.followUp({
-      content: "There was an error trying to execute that command!",
+      content: "Algum erro aconteceu ao tentar executar o comando!",
     });
   }
 });

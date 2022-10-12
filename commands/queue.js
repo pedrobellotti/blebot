@@ -2,7 +2,7 @@ const { GuildMember } = require("discord.js");
 
 module.exports = {
   name: "queue",
-  description: "View the queue of current songs!",
+  description: "Mostra a fila de músicas atual!",
 
   async execute(interaction, player) {
     if (
@@ -10,7 +10,7 @@ module.exports = {
       !interaction.member.voice.channel
     ) {
       return void interaction.reply({
-        content: "You are not in a voice channel!",
+        content: "Você não está em um canal de voz!",
         ephemeral: true,
       });
     }
@@ -21,7 +21,7 @@ module.exports = {
         interaction.guild.members.me.voice.channelId
     ) {
       return void interaction.reply({
-        content: "You are not in my voice channel!",
+        content: "Você não está no meu canal de voz!",
         ephemeral: true,
       });
     }
@@ -32,9 +32,9 @@ module.exports = {
       return void interaction.reply({
         embeds: [
           {
-            title: "Now Playing",
+            title: "Tocando agora",
             description: trimString(
-              `The Current song playing is 🎶 | **${queue.current.title}**! \n 🎶 | ${queue}! `,
+              `Tocando agora: 🎶 | **${queue.current.title}**! \n 🎶 | ${queue}! `,
               4095
             ),
           },
@@ -42,7 +42,7 @@ module.exports = {
       });
     } else {
       return void interaction.reply({
-        content: "There is no song in the queue!",
+        content: "A fila está vazia!",
       });
     }
   },

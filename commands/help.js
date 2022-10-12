@@ -2,7 +2,7 @@ const fs = require("fs");
 
 module.exports = {
   name: "help",
-  description: "List all available commands.",
+  description: "Lista todos os comandos disponívels.",
   execute(interaction) {
     let str = "";
     const commandFiles = fs
@@ -11,7 +11,7 @@ module.exports = {
 
     for (const file of commandFiles) {
       const command = require(`./${file}`);
-      str += `Name: ${command.name}, Description: ${command.description} \n`;
+      str += `Comando: ${command.name}, Descrição: ${command.description} \n`;
     }
 
     return void interaction.reply({
