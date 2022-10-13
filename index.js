@@ -1,11 +1,10 @@
 const fs = require("fs");
-const Discord = require("discord.js");
-const { ActivityType } = require("discord.js");
+const { Collection, ActivityType } = require("discord.js");
 const Client = require("./client/Client");
 const config = require("./config.json");
 const { Player } = require("discord-player");
 const client = new Client();
-client.commands = new Discord.Collection();
+client.commands = new Collection();
 
 const commandFiles = fs
   .readdirSync("./commands")
