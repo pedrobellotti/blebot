@@ -20,24 +20,6 @@ console.log(client.commands);
 
 const player = new Player(client);
 
-//Fix para o bot desconectando aleatoriamente
-player.on('connectionCreate', (queue) => {
-    queue.connection.voiceConnection.on('stateChange', (oldState, newState) => {
-      const oldNetworking = Reflect.get(oldState, 'networking');
-      const newNetworking = Reflect.get(newState, 'networking');
-
-      const networkStateChangeHandler = (oldNetworkState, newNetworkState) => {
-        const newUdp = Reflect.get(newNetworkState, 'udp');
-        clearInterval(newUdp?.keepAliveInterval);
-      }
-
-      oldNetworking?.off('stateChange', networkStateChangeHandler);
-      newNetworking?.on('stateChange', networkStateChangeHandler);
-      const now = new Date().toISOString();
-      console.log(`${now} | Network state change detected: ${oldState.status} -> ${newState.status}, deflecting...`);
-    });
-});
-
 player.on("error", (queue, error) => {
   console.log(
     `[${queue.guild.name}] Error emitted from the queue: ${error.message}`

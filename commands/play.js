@@ -77,6 +77,23 @@ module.exports = {
       searchResult.playlist
         ? queue.addTracks(searchResult.tracks)
         : queue.addTrack(searchResult.tracks[0]);
+	
+	//Random disconnect fix
+	const networkStateChangeHandler = (oldNetworkState, newNetworkState) => {
+        	const newUdp = Reflect.get(newNetworkState, 'udp');
+        	clearInterval(newUdp?.keepAliveInterval);
+	}
+    	queue.connection.voiceConnection.on('stateChange', (oldState, newState) => {
+      		const oldNetworking = Reflect.get(oldState, 'networking');
+      		const newNetworking = Reflect.get(newState, 'networking');
+   		oldNetworking?.off('stateChange', networkStateChangeHandler);
+      		newNetworking?.on('stateChange', networkStateChangeHandler);
+		if(oldState.status !== newState.status) {
+      			const now = new Date().toISOString();
+      			console.log(`${now} | Network state change detected: ${oldState.status} -> ${newState.status}`);
+		}
+    	});
+
       if (!queue.playing) await queue.play();
     } catch (error) {
       console.log(error);
